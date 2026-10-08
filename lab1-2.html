@@ -27,6 +27,9 @@
 
           });  
 
+mymap.addControl(new mapboxgl.FullscreenControl());
+mymap.addControl(new mapboxgl.NavigationControl());
+
 // code from the next step will go here!
 mymap.on('style.load', () => {
     // Changes the map lighting to a dusk setting.
