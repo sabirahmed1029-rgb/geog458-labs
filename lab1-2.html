@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title>my First Map</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+   </style>
+</head>
+<body>
+   <div id='map'></div>
+   <script>
+      mapboxgl.accessToken = 'pk.eyJ1Ijoic2FiaXIyMDYiLCJhIjoiY211eDBiMXFwMDJyaDJ3b2w5YmF2MzBmeCJ9.yFwgAjqxH6OM4voOje_A8g';
+      //
+      const mymap = new mapboxgl.Map({
+             container: 'map',
+             //style: 'mapbox://styles/mapbox/light-v11',
+             //projection: 'globe', //Display the map as a globe since satellite-v9 defaults to Mercator
+             center: [-122.3352, 47.608], // Centers the map on Seattle
+             zoom:11 // Sets the zoom level to 11. I like the look of the city at this zoom level.
+
+          });  
+
+// code from the next step will go here!
+mymap.on('style.load', () => {
+    // Changes the map lighting to a dusk setting.
+    mymap.setConfigProperty('basemap', 'lightPreset', 'dusk');
+
+    // Hides points of interest to make the map less crowded.
+    mymap.setConfigProperty('basemap', 'showPointOfInterestLabels', false);
+
+    // Uses a faded theme to make roadways and freeway lines stand out more.
+    mymap.setConfigProperty('basemap', 'theme', 'faded');
+
+    // Keeps road names and labels visible on the map.
+    mymap.setConfigProperty('basemap', 'showRoadLabels', true);
+});
+
+// Explanation and justification from Part 3, Step 7:
+
+// I chose the faded property because it makes the roads and freeways stand out more, which is important for navigation.
+// i chose the show road labels property because it keeps the road names and labels visible on the map, 
+// which is important for a seattle map because it is a city with many roads and freeways, and it is 
+// important to be able to see the names of the roads and freeways in order to navigate the city effectively. 
+
+</script>
+</body>
+</html>
+
