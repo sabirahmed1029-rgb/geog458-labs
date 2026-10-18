@@ -1,0 +1,146 @@
+
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='utf-8' />
+    <title></title>
+    <meta name='viewport' content='width=device-width, initial-scale=1' />
+    <link href="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v3.6.0/mapbox-gl.js"></script>
+    <style>
+        body { margin: 0; padding: 0; }
+        #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+        /* Layout of the legend panel. */
+        #legend {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 160px;
+        background: #fff;
+        margin-right: 20px;
+        margin-bottom: 40px;
+        padding: 12px;
+        border-radius: 3px;
+        text-align: center;
+    }
+
+    .break {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin: 8px 0;
+    }
+
+    .dot {
+        display: inline-block;
+        flex-shrink: 0;
+        border-radius: 50%;
+        opacity: 0.6;
+    }
+
+    .dot-label {
+        position: static;
+        font-style: normal;
+        white-space: nowrap;
+}
+
+/* Link color within the legend. */
+        #legend a {
+        color: black;
+}
+   </style>
+</head>
+<body>
+    <h1 style="position: absolute; z-index: 1; background: white;">World Population</h1>
+   <div id='map'></div>
+   <div id="legend"></div>
+   <script>
+    // The mapbox access token give the webpage access to mapbox features while the javascript code creates a map 
+    // and sets to html file
+      mapboxgl.accessToken = 'pk.eyJ1Ijoic2FiaXIyMDYiLCJhIjoiY211eDBiMXFwMDJyaDJ3b2w5YmF2MzBmeCJ9.yFwgAjqxH6OM4voOje_A8g';
+      //
+      const mymap = new mapboxgl.Map({
+         container: 'map',
+        style: 'mapbox://styles/mapbox/streets-v12',
+    center: [-96, 37.8],
+    zoom: 2
+});
+
+  mymap.on('load', () => {
+
+     mymap.addSource('cities', {
+        type: 'geojson',
+        data: 'data/world-cities.geojson'
+    });
+
+        mymap.addLayer({
+        id: 'cities-layer',
+        type: 'circle',
+        source: 'cities',
+        paint: {
+        'circle-radius':[
+            'interpolate',
+            ['linear'],
+            ['get', 'population'],
+            0, 2,
+            20000, 4,
+            100000, 6,
+            500000, 8,
+            1000000, 10
+
+        ],
+            'circle-color':[
+                'interpolate',
+                ['linear'],
+                ['get', 'population'],
+                 0, '#ffffb2',
+                20000, '#fecc5c',
+                100000, '#fd8d3c',
+                500000, '#f03b20',
+                1000000, '#bd0026'
+            ],
+
+           'circle-stroke-color': 'white'
+        }
+    });
+
+    mymap.on('click', 'cities-layer', (event) => {
+    const feature = event.features[0];
+    const coordinates = feature.geometry.coordinates.slice();
+
+
+    new mapboxgl.Popup()
+    .setLngLat(coordinates)
+    .setHTML(`<strong>city:</strong> ${feature.properties.city}<br>
+              <strong>population:</strong> ${feature.properties.population}`)
+    .addTo(mymap);
+
+    });
+
+
+    const legend = document.getElementById('legend');
+    const grades = [0, 20000, 100000, 500000, 1000000];
+    const radii = [2, 4, 6, 8, 10];
+    const colors = ['#ffffb2', '#fecc5c', '#fd8d3c', '#f03b20', '#bd0026'];
+    const labels = ['<strong>Population</strong>'];
+
+    for (let i = 0; i < grades.length; i++) {
+    const value = grades[i];
+    const diameter = 2 * radii[i]; 
+
+    labels.push(
+        '<p class="break"><i class="dot" style="background:' + colors[i] +
+        '; width:' + diameter + 'px; height:' + diameter +
+        'px;"></i> <span class="dot-label" style="top:' +
+        diameter / 2 + 'px;">' + value + '</span></p>'
+    );
+}
+
+legend.innerHTML = labels.join('');
+
+
+});
+
+   </script>
+
