@@ -23,7 +23,7 @@ The map includes an interactive elevation overlay, a legend, navigation controls
 - Repository: [(https://github.com/sabirahmed1029-rgb/geog458-labs/tree/main/lab3)]
 - Lab 3-1: [(https://sabirahmed1029-rgb.github.io/geog458-labs/lab3/sabirahmed_lab3-1.html)]
 
-- Lab 3-2: [Add GitHub Pages URL]
+- Lab 3-2: [(https://sabirahmed1029-rgb.github.io/geog458-labs/lab3/sabirahmed_lab3-2.html)]
 - Screenshots:
 
 ### Elevation and Rivers Map
