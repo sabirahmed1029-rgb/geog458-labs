@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lab 4 — Pokemon GO at UW Seattle</title>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v3.7.0/mapbox-gl.js"></script>
+  <!-- jQuery must load before the body script uses $. -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
+  <style>
+    body { margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+    .panel { position: absolute; top: 18px; left: 18px; max-width: 330px;
+      max-height: calc(100% - 100px); overflow: auto; margin-right: 60px;
+      padding: 16px; background: #fff; color: #182e3a;
+      border-radius: 4px; box-shadow: 0 2px 12px #0005; }
+    h1 { font-size: 21px; margin: 0 0 12px; }
+    p, #status, #mode-label { font-size: 14px; line-height: 1.4; }
+    #status, #mode-label { margin-top: 12px; }
+    button { padding: 9px 12px; border: 1px solid #665079;
+      background: white; color: #312144; cursor: pointer; }
+    button[aria-pressed="true"] { background: #312144; color: white; }
+    button:disabled { opacity: .45; cursor: wait; }
+    .popup-image { display: block; width: 400px;
+      max-width: calc(100vw - 60px); height: auto; max-height: 65vh;
+      object-fit: contain; margin-top: 8px; }
+  </style>
+</head>
+<body>
+  <div id="map" aria-label="Map of Pokemon encounters"></div>
+  <aside class="panel">
+    <h1>Pokemon GO encounters at UW Seattle</h1>
+    <div role="group" aria-label="Map view">
+      <button type="button" data-view="points" aria-pressed="true" disabled>Points</button>
+      <button type="button" data-view="heatmap" aria-pressed="false" disabled>Heatmap</button>
+    </div>
+    <!-- Keep each ID exactly once, inside body and before the script. -->
+    <div id="mode-label"></div>
+    <div id="status"></div>
+    <p>Class observations, not a complete survey of all Pokemon.<br>
+      Source: <a href="https://docs.google.com/spreadsheets/d/12rOwVWdC0tXeS-peDuKQ7i9CtUEMnC1QoVJ3QZcZMu8/edit?usp=sharing" target="_blank" rel="noopener">Class Google Sheet</a></p>
+  </aside>
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FiaXIyMDYiLCJhIjoiY211eDBiMXFwMDJyaDJ3b2w5YmF2MzBmeCJ9.yFwgAjqxH6OM4voOje_A8g';
+    const map = new mapboxgl.Map({
+      container: 'map',
+      style: 'mapbox://styles/mapbox/dark-v11',
+      projection: 'globe',
+      center: [-122.3078, 47.6553],
+      zoom: 14,
+      minZoom: 10,
+      maxZoom: 19
+    });
+
+    // Register immediately, before requesting CSV. Keep this promise.
+    const mapReady = new Promise(function (resolve) {
+      map.once('load', resolve);
+    });
+    map.addControl(new mapboxgl.FullscreenControl());
+    map.addControl(new mapboxgl.NavigationControl());
+    document.getElementById('mode-label').textContent =
+      'Points: one dot = one encounter. Click for the Pokemon name and photo.';
+    document.getElementById('status').setAttribute('role', 'status');
+    document.getElementById('status').textContent =
+      'Starter ready. Complete Steps 3.2–3.7 to load the class data and enable both views.';
+
+    // [3.2] REPLACE THIS LINE WITH THE CSV REQUEST AND CONVERSION BLOCK.
+
+    // Keep this function wrapper. Paste Steps 3.3–3.7 INSIDE it.
+    function addPokemonLayers(data) {
+      // [3.3] REPLACE THIS LINE WITH THE POKEMON SOURCE BLOCK.
+      // [3.4] REPLACE THIS LINE WITH THE POKEMON HEATMAP BLOCK.
+      // [3.5] REPLACE THIS LINE WITH THE POKEMON POINT BLOCK.
+      // [3.6] REPLACE THIS LINE WITH THE NAME AND IMAGE POPUP BLOCK.
+      // [3.7] REPLACE THIS LINE WITH THE VIEW SWITCH AND STATUS BLOCK.
+    }
+  </script>
+</body>
+</html>
